@@ -1,0 +1,46 @@
+{
+  "stare_initiala": "START",
+  "stari_finale": ["HEAVEN/HELL"],
+  "dfa": {
+    "START": {
+      "descriere": "\n   HARTA CASTELULUI\n   +-------+     +-------+\n   | GARDEN|-----| WRKSHP|\n   +-------+     +---+---+\n                     |\n               +-----+-----+\n               | LIBRARY   |\n               +-----+-----+\n   +-------+         |         +-----------+\n   |  LAB  |---------+---------| @ START   |\n   +-------+                   +-----------+\n\n[SISTEM]: Te-ai trezit in celula de start. Singura iesire este la VEST.",
+      "tranzitii": { "vest": "HOL" }
+    },
+    "HOL": {
+      "descriere": "\n   HARTA CASTELULUI\n   +-------+     +-------+\n   | GARDEN|-----| WRKSHP|\n   +-------+     +---+---+\n                     |\n               +-----+-----+\n               | LIBRARY   |\n               +-----+-----+\n   +-------+         |         +-----------+\n   |  LAB  |---- [@ HOL] ------|   START   |\n   +-------+         |         +-----------+\n               +-----+-----+\n               |   FINAL   |\n               +-----------+\n\n[SISTEM]: Esti in HOLUL principal. Usa spre LAB (vest) e incuiata.\nMergi la NORD spre biblioteca.",
+      "tranzitii": { "nord": "LIBRARY" }
+    },
+    "LIBRARY": {
+      "descriere": "\n   HARTA CASTELULUI\n   +-------+     +-------+\n   | GARDEN|-----| WRKSHP|\n   +-------+     +---+---+\n                     |\n               +-----+-----+\n               | @ LIBRARY |\n               +-----+-----+\n   +-------+         |         +-----------+\n   |  LAB  |---------+---------|   START   |\n   +-------+                   +-----------+\n\n[SISTEM]: Esti in BIBLIOTECA. La VEST este atelierul (Workshop),\nla SUD te intorci in Hol.",
+      "tranzitii": { "vest": "WORKSHOP", "sud": "HOL" }
+    },
+    "WORKSHOP": {
+      "descriere": "\n   HARTA CASTELULUI\n   +-------+     +-------+\n   | GARDEN|-----|@WRKSHP |\n   +-------+     +---+---+\n                     |\n               +-----+-----+\n               | LIBRARY   |\n               +-----+-----+\n\n[SISTEM]: Esti in WORKSHOP. Pe masa vezi o CHEIE stralucitoare.\nPoti sa o IEI (ia_cheia) sau sa mergi la VEST (Garden).",
+      "tranzitii": { "est": "LIBRARY", "ia_cheia": "WORKSHOP_CU_CHEIE", "vest": "GARDEN" }
+    },
+    "WORKSHOP_CU_CHEIE": {
+      "descriere": "\n   HARTA CASTELULUI\n   +-------+     +-------+\n   | GARDEN|-----|@WRKSHP*|\n   +-------+     +---+---+\n                     |\n               +-----+-----+\n               | LIBRARY   |\n               +-----+-----+\n\n[SISTEM]: Ai luat CHEIA! Acum te poti intoarce spre LAB.\nMergi la EST spre Biblioteca.",
+      "tranzitii": { "est": "LIBRARY_CU_CHEIE", "vest": "GARDEN" }
+    },
+    "LIBRARY_CU_CHEIE": {
+      "descriere": "\n   HARTA CASTELULUI\n   +-------+     +-------+\n   | GARDEN|-----| WRKSHP|\n   +-------+     +---+---+\n                     |\n               +-----+-----+\n               | @ LIBRARY*|\n               +-----+-----+\n               |           |\n\n[SISTEM]: Biblioteca (ai cheia). Mergi la SUD spre Hol.",
+      "tranzitii": { "vest": "WORKSHOP_CU_CHEIE", "sud": "HOL_CU_CHEIE" }
+    },
+    "HOL_CU_CHEIE": {
+      "descriere": "\n   HARTA CASTELULUI\n   +-------+         |         +-----------+\n   |  LAB  |---- [@ HOL*] -----|   START   |\n   +-------+         |         +-----------+\n               +-----+-----+\n               |   FINAL   |\n               +-----------+\n\n[SISTEM]: Hol (ai cheia). Acum poti intra in LAB la VEST.",
+      "tranzitii": { "nord": "LIBRARY_CU_CHEIE", "vest": "LAB" }
+    },
+    "LAB": {
+      "descriere": "\n   HARTA CASTELULUI\n   +-------+         |         \n   | @ LAB |---------+         \n   +-------+                   \n\n[SISTEM]: Esti in LABORATOR. Pe masa e o potiune.\nBEA_POTIUNE pentru a ajunge instant in Gradina.",
+      "tranzitii": { "est": "HOL_CU_CHEIE", "bea_potiune": "GARDEN" }
+    },
+    "GARDEN": {
+      "descriere": "\n   HARTA CASTELULUI\n   +-------+     +-------+\n   |@GARDEN|-----| WRKSHP|\n   +-------+     +---+---+\n\n[SISTEM]: Esti in GRADINA. Aer proaspat! Mergi la SUD pentru FINAL.",
+      "tranzitii": { "sud": "HEAVEN/HELL", "est": "WORKSHOP" }
+    },
+    "HEAVEN/HELL": {
+      "descriere": "\n   HARTA CASTELULUI\n                     |\n               +-----+-----+\n               | @ FINAL   |\n               +-----------+\n\n[SISTEM]: FELICITARI! Ai ajuns la destinatia finala.",
+      "tranzitii": {}
+    }
+  }
+}
